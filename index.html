@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سیستم تشخیص رنگ سبز</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>سیستم نظارت هوشمند رنگ</h1>
+    
+    <div class="video-container">
+        <video id="videoFeed" playsinline autoplay></video>
+        <div class="permission-alert" id="permissionAlert">
+            لطفاً دسترسی دوربین را فعال کنید
+            <button id="retryBtn">تلاش مجدد</button>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button id="startBtn" class="primary-btn">فعال‌سازی دوربین</button>
+        <button id="stopBtn" class="danger-btn" disabled>توقف سیستم</button>
+    </div>
+
+    <div class="status-container">
+        <div id="statusText">وضعیت: آماده به کار</div>
+        <div class="color-preview" id="colorPreview"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
