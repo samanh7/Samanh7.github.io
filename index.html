@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سیستم تشخیص رنگ سبز</title>
+    <title>سیستم تشخیص رنگ سبز پیشرفته</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>سیستم نظارت هوشمند رنگ</h1>
+    <h1>سیستم نظارت هوشمند رنگ سبز</h1>
     
     <div class="video-container">
         <video id="videoFeed" playsinline autoplay></video>
         <div class="permission-alert" id="permissionAlert">
-            لطفاً دسترسی دوربین را فعال کنید
+            برای استفاده از سیستم ابتدا اجازه دسترسی به دوربین را بدهید
             <button id="retryBtn">تلاش مجدد</button>
         </div>
     </div>
@@ -20,6 +20,10 @@
     <div class="controls">
         <button id="startBtn" class="primary-btn">فعال‌سازی دوربین</button>
         <button id="stopBtn" class="danger-btn" disabled>توقف سیستم</button>
+        <label class="file-input">
+            <input type="file" id="alarmFile" accept="audio/mpeg, audio/wav">
+            انتخاب فایل آلارم
+        </label>
     </div>
 
     <div class="status-container">
