@@ -14,7 +14,7 @@ class ColorDetectionSystem {
         this.alarmSound = null;
         this.audioContext = null;
         this.isAlarmActive = false;
-        this.colorThreshold = 30;
+        this.colorThreshold = 10;
 
         this.initialize();
     }
