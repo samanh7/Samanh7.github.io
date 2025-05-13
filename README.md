@@ -1,1 +1,1 @@
-# Samanh7.github.io
+ for the detected green color to be ok and for the change it had alarm# Samanh7.github.io
