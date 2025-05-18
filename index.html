@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سیستم تشخیص رنگ سبز پیشرفته</title>
+    <title>سیستم هشدار دوگانه رنگ</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>سیستم نظارت هوشمند رنگ سبز</h1>
+    <h1>سیستم تشخیص رنگ سبز و قرمز</h1>
     
     <div class="video-container">
         <video id="videoFeed" playsinline autoplay></video>
         <div class="permission-alert" id="permissionAlert">
-            برای استفاده از سیستم ابتدا اجازه دسترسی به دوربین را بدهید
+            لطفاً دسترسی به دوربین را فعال کنید
             <button id="retryBtn">تلاش مجدد</button>
         </div>
     </div>
@@ -28,6 +28,10 @@
 
     <div class="status-container">
         <div id="statusText">وضعیت: آماده به کار</div>
+        <div class="thresholds">
+            <span>آستانه سبز: <span id="greenThreshold">7</span>%</span>
+            <span>آستانه قرمز: <span id="redThreshold">0.5</span>%</span>
+        </div>
         <div class="color-preview" id="colorPreview"></div>
     </div>
 
