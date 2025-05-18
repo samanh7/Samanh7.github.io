@@ -13,7 +13,7 @@ body {
     align-items: center;
     background: var(--background);
     color: var(--text-light);
-    font-family: 'IRANSans', Tahoma, sans-serif;
+    font-family: Tahoma, sans-serif;
 }
 
 .video-container {
@@ -110,13 +110,22 @@ button:disabled {
     text-align: center;
 }
 
+.thresholds {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 15px 0;
+    color: #888;
+}
+
 .color-preview {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     margin: 15px auto;
     border: 3px solid white;
     transition: background-color 0.3s;
+    box-shadow: 0 0 15px rgba(255,0,0,0.3);
 }
 
 .alert {
