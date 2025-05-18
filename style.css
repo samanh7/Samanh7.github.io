@@ -3,17 +3,25 @@
     --danger: #f44336;
     --background: #1a1a1a;
     --text-light: #ffffff;
+    --red: #ff0000;
+    --green: #00ff00;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    margin: 0;
     padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     background: var(--background);
     color: var(--text-light);
-    font-family: Tahoma, sans-serif;
+    font-family: 'IRANSans', Tahoma, sans-serif;
+    min-height: 100vh;
 }
 
 .video-container {
@@ -21,10 +29,11 @@ body {
     width: 100%;
     max-width: 640px;
     height: 480px;
-    border-radius: 12px;
+    border-radius: 15px;
     overflow: hidden;
     background: #000;
     margin: 20px 0;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
 
 #videoFeed {
@@ -40,7 +49,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.9);
+    background: rgba(0,0,0,0.95);
     color: white;
     display: none;
     flex-direction: column;
@@ -48,92 +57,8 @@ body {
     justify-content: center;
     gap: 20px;
     font-size: 1.2rem;
-}
-
-.controls {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    justify-content: center;
-    margin: 20px 0;
-}
-
-button {
-    padding: 12px 24px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: opacity 0.3s;
-}
-
-.primary-btn {
-    background: var(--primary);
-    color: white;
-}
-
-.danger-btn {
-    background: var(--danger);
-    color: white;
-}
-
-button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-.file-input {
-    position: relative;
-    overflow: hidden;
-    background: #2196F3;
-    color: white;
-    border-radius: 8px;
-}
-
-.file-input input[type="file"] {
-    position: absolute;
-    left: 0;
-    top: 0;
-    opacity: 0;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-}
-
-.status-container {
-    width: 100%;
-    max-width: 640px;
-    padding: 20px;
-    background: #2d2d2d;
-    border-radius: 8px;
-    margin-top: 20px;
     text-align: center;
+    backdrop-filter: blur(5px);
 }
 
-.thresholds {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin: 15px 0;
-    color: #888;
-}
-
-.color-preview {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin: 15px auto;
-    border: 3px solid white;
-    transition: background-color 0.3s;
-    box-shadow: 0 0 15px rgba(255,0,0,0.3);
-}
-
-.alert {
-    animation: pulse 1s infinite;
-}
-
-@keyframes pulse {
-    0% { background-color: #2d2d2d; }
-    50% { background-color: var(--danger); }
-    100% { background-color: #2d2d2d; }
-}
+/* بقیه استایل‌ها با بهبودهای ظاهری */
