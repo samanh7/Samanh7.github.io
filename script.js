@@ -14,7 +14,10 @@ class ColorDetectionSystem {
         this.alarmSound = null;
         this.audioContext = null;
         this.isAlarmActive = false;
-        this.colorThreshold = 10;
+        
+        // تنظیمات آستانه جدید
+        this.greenThreshold = 7;    // 7% برای سبز
+        this.redThreshold = 0.5;    // 0.5% برای قرمز
 
         this.initialize();
     }
@@ -22,6 +25,12 @@ class ColorDetectionSystem {
     initialize() {
         this.checkCameraSupport();
         this.setupEventListeners();
+        this.updateThresholdDisplay();
+    }
+
+    updateThresholdDisplay() {
+        document.getElementById('greenThreshold').textContent = this.greenThreshold;
+        document.getElementById('redThreshold').textContent = this.redThreshold;
     }
 
     checkCameraSupport() {
@@ -80,22 +89,82 @@ class ColorDetectionSystem {
 
     processFrame(pixelData) {
         let greenPixels = 0;
+        let redPixels = 0;
+        const totalPixels = pixelData.length / 4;
+
         for (let i = 0; i < pixelData.length; i += 4) {
             const r = pixelData[i];
             const g = pixelData[i+1];
             const b = pixelData[i+2];
             
-            if (g > 80 && g > r * 1.5 && g > b * 1.5) greenPixels++;
+            // تشخیص رنگ سبز
+            if (this.isGreenPixel(r, g, b)) greenPixels++;
+            
+            // تشخیص رنگ قرمز
+            if (this.isRedPixel(r, g, b)) redPixels++;
         }
         
-        const greenPercentage = (greenPixels / (pixelData.length / 4)) * 100;
-        this.updateUI(greenPercentage);
+        const greenPercentage = (greenPixels / totalPixels) * 100;
+        const redPercentage = (redPixels / totalPixels) * 100;
         
-        if (greenPercentage < this.colorThreshold && !this.isAlarmActive) {
+        this.updateUI(greenPercentage, redPercentage);
+        
+        // شرط ترکیبی آلارم
+        if (
+            greenPercentage < this.greenThreshold || 
+            redPercentage > this.redThreshold
+        ) {
             this.triggerAlarm();
-        } else if (greenPercentage >= this.colorThreshold && this.isAlarmActive) {
+        } else {
             this.stopAlarm();
         }
+    }
+
+    isGreenPixel(r, g, b) {
+        return (
+            g > 80 &&
+            g > r * 1.5 &&
+            g > b * 1.5 &&
+            (g - r) > 30 &&
+            (g - b) > 30
+        );
+    }
+
+    isRedPixel(r, g, b) {
+        const hsv = this.rgbToHsv(r, g, b);
+        return (
+            r > 200 &&
+            g < 50 &&
+            b < 50 &&
+            hsv.h >= 0 &&
+            hsv.h <= 10 &&
+            hsv.s >= 90 &&
+            hsv.v >= 90
+        );
+    }
+
+    rgbToHsv(r, g, b) {
+        r /= 255, g /= 255, b /= 255;
+        const max = Math.max(r, g, b), min = Math.min(r, g, b);
+        let h, s, v = max;
+        const d = max - min;
+        s = max === 0 ? 0 : d / max;
+
+        if (max === min) h = 0;
+        else {
+            switch(max) {
+                case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                case g: h = (b - r) / d + 2; break;
+                case b: h = (r - g) / d + 4; break;
+            }
+            h *= 60;
+        }
+
+        return {
+            h: h < 0 ? h + 360 : h,
+            s: s * 100,
+            v: v * 100
+        };
     }
 
     async loadAlarmSound(event) {
@@ -157,9 +226,20 @@ class ColorDetectionSystem {
         this.statusText.classList.remove('alert');
     }
 
-    updateUI(percentage) {
-        this.colorPreview.style.backgroundColor = `rgb(0, ${Math.min(255, percentage * 2.55)}, 0)`;
-        this.statusText.textContent = `درصد سبزی: ${percentage.toFixed(1)}% | آستانه: ${this.colorThreshold}%`;
+    updateUI(greenPercent, redPercent) {
+        const redIntensity = Math.min(255, redPercent * 255);
+        const greenIntensity = Math.min(255, greenPercent * 2.55);
+        
+        this.colorPreview.style.backgroundColor = `rgb(
+            ${redIntensity},
+            ${greenIntensity},
+            0
+        )`;
+        
+        this.statusText.innerHTML = `
+            <div>سبز: ${greenPercent.toFixed(1)}% <span class="threshold">(آستانه: <${this.greenThreshold}%)</span></div>
+            <div>قرمز: ${redPercent.toFixed(2)}% <span class="threshold">(آستانه: >${this.redThreshold}%)</span></div>
+        `;
     }
 
     stopSystem() {
